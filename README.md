@@ -312,3 +312,7 @@ Example result:
 | 5,000,000    | 40.6245  | 123,078.39 | 1,366.62|
 | 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
+
+## To do
+- What if someone is making a lot of transactions and blocking others?
+- Should I handle concurrency?
