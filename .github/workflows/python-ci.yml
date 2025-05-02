@@ -35,8 +35,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Build the project
         run: |
@@ -55,8 +54,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run tests with coverage
         run: |
