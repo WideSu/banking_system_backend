@@ -1,7 +1,5 @@
-from pathlib import Path
-import pytest, sys, os
+import pytest
 # Ensure package root is in path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from banking.core import Account, Bank, InsufficientFundsError, AccountNotFoundError, NegativeAmountError
 
 # -------- Logging --------
