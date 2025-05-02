@@ -48,9 +48,6 @@ graph TD
     style C fill:#6A1B9A,stroke:#4A148C,color:#ffffff
     style D fill:#D32F2F,stroke:#B71C1C,color:#ffffff
     style F fill:#FF8F00,stroke:#E65100,color:#000000
-    style D1,D2,D3,D4 fill:#E3F2FD,stroke:#90CAF9
-    style E1,E2,E3,E4 fill:#E8F5E9,stroke:#A5D6A7
-    style F1,F2,F3 fill:#FFF3E0,stroke:#FFCC80
     
     %% Subgraph styling
     class Python_Banking_System,Core_Operations,Error_Handling fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
