@@ -17,12 +17,12 @@ A minimal banking system implementation designed for demonstration purposes, fea
 ```mermaid
 %% System Architecture Diagram for In-Memory Banking System
 graph TD
-    subgraph Python Banking System
+    subgraph Python_Banking_System["Python Banking System"]
         A[Bank] -->|manages| B[Account]
-        B -->|1:N| C[Transactions]
+        B -->|records| C[Transactions]
     end
 
-    subgraph Core Components
+    subgraph Core_Operations["Core Operations"]
         B --> D[Account Operations]
         D --> D1[Deposit]
         D --> D2[Withdraw]
@@ -32,30 +32,28 @@ graph TD
         E --> E1[Timestamp]
         E --> E2[Amount]
         E --> E3[Type]
+        E --> E4[Balance After]
     end
 
-    subgraph Error Handling
+    subgraph Error_Handling["Error Handling"]
         F[Custom Exceptions]
         F --> F1[InsufficientFundsError]
         F --> F2[AccountNotFoundError]
         F --> F3[NegativeAmountError]
     end
 
-    %% High-Contrast Styling
+    %% Styling
     style A fill:#1565C0,stroke:#0D47A1,color:#ffffff
     style B fill:#00897B,stroke:#00695C,color:#ffffff
     style C fill:#6A1B9A,stroke:#4A148C,color:#ffffff
     style D fill:#D32F2F,stroke:#B71C1C,color:#ffffff
     style F fill:#FF8F00,stroke:#E65100,color:#000000
-    
-    %% Component Styling
     style D1,D2,D3,D4 fill:#E3F2FD,stroke:#90CAF9
     style E1,E2,E3,E4 fill:#E8F5E9,stroke:#A5D6A7
     style F1,F2,F3 fill:#FFF3E0,stroke:#FFCC80
     
-    %% Graph Styling
-    classDef subgraph fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
-    class Python_Banking_System,Core_Operations,Error_Handling subgraph
+    %% Subgraph styling
+    class Python_Banking_System,Core_Operations,Error_Handling fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
 ```
 ---
 
