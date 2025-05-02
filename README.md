@@ -1,5 +1,7 @@
 # 🏦 In-Memory Banking System
 
+![Test Coverage](./coverage.svg)
+
 A lightweight in-memory banking system implemented in Python. This project supports multiple users, each with zero or more bank accounts, and allows basic banking operations with no persistent storage.
 
 ---
