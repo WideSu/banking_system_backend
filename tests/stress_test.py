@@ -1,5 +1,4 @@
 import time
-import sys
 import random
 import tracemalloc  # To track memory usage
 from banking.core import Bank
