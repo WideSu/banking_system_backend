@@ -77,4 +77,4 @@ jobs:
       - name: Run tests with coverage threshold
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
-          pytest --cov=./ --cov-report=xml --cov-fail-under=98  # This will fail if coverage < 98%
+          pytest --cov=banking --cov-report=xml --cov-fail-under=98  # This will fail if coverage < 98%
