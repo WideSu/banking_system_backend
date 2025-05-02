@@ -69,7 +69,8 @@ graph TD
 - ✅ Create users and accounts with an initial balance
 - ✅ Each user may have **one** account (assumed)
     - Accounts are stored using **Dictionary** in {'name':'balance'} pair
-    - ⚠️ One user multiple accounts requires authentications which obeys KISS principle
+    - ⚠️ One user multiple accounts requires authentications which obeys **KISS principle**
+    - We assume that there is only **one currency** for simplicity.
 - ✅ Deposit funds into any owned account
 - ✅ Withdraw funds (no overdraft allowed)
     - Invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
