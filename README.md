@@ -16,7 +16,8 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 ## ✨ Features
 
 - ✅ Create users and accounts with an initial balance  
-- ✅ Each user may have **one** accounts (one user multiple accounts requires authentications which obeys KISS principle)  
+- ✅ Each user may have **one** accounts 
+    - one user multiple accounts requires authentications which obeys KISS principle
 - ✅ Deposit funds into any owned account 
 - ✅ Withdraw funds (no overdraft allowed)  
 - ✅ Transfer funds between accounts  
