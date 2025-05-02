@@ -15,13 +15,16 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 
 ## ✨ Features
 
-- ✅ Create users and accounts with an initial balance  
-- ✅ Each user may have **one** account 
+- ✅ Create users and accounts with an initial balance
+- ✅ Each user may have **one** account (assumed)
+    - stored using **Dictionary** in {'name':'balance'} pair
     - one user multiple accounts requires authentications which obeys KISS principle
-- ✅ Deposit funds into any owned account 
-- ✅ Withdraw funds (no overdraft allowed)  
-- ✅ Transfer funds between accounts  
+- ✅ Deposit funds into any owned account
+- ✅ Withdraw funds (no overdraft allowed)
+    - invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
+- ✅ Transfer funds between accounts 
 - ✅ View account transaction history *(optional)*
+    - transaction records are stored in **List**
 
 ---
 
@@ -65,6 +68,11 @@ You can run an interactive session like this:
 >>> account.deposit(500)
 >>> account.withdraw(200)
 >>> account.get_transaction_history()
+```
+
+Example output:
+```bash
+['Account created with balance: 100.00', 'Deposited: 500.00', 'Withdrawn: 200.00']
 ```
 ### 3. Run Unit Tests
 - 1. Test coverage
