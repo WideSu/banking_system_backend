@@ -237,7 +237,7 @@ pytest -v
 
 Example output:
 ```bash
-                                                                ========================================= test session starts =========================================
+========================================= test session starts =========================================
 platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0 -- /Users/huanganni/Documents/GitHub/banking_system/venv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/huanganni/Documents/GitHub/banking_system
