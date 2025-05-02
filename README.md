@@ -13,7 +13,7 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 
 ---
 
-## ✨ Features
+## ✨ Features and Implementation
 
 - ✅ Create users and accounts with an initial balance
 - ✅ Each user may have **one** account (assumed)
