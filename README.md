@@ -258,3 +258,24 @@ tests/test_banking.py::test_create_account_negative_balance PASSED              
 tests/test_banking.py::test_get_account_success PASSED                                                                                                                          [ 92%]
 tests/test_banking.py::test_get_account_not_found PASSED                                                                                                                        [100%]                                                      
 ```
+
+### 4. Stress Test
+To see the result
+```
+python -m tests.stress_test
+```
+Key Metrics to Monitor
+- Throughput: Transactions per second (Txn/s)
+- Latency: Time to complete all transactions
+- Memory Usage: RAM consumption during test
+- Error Rate: Failed transactions percentage
+
+Example result:
+
+Transactions | Time (s)   | Txn/s     
+---------------------------------------------
+       1,000 | 0.0033     | 301545.42 
+       2,000 | 0.0059     | 341870.64 
+       3,000 | 0.0073     | 409726.41 
+       5,000 | 0.0230     | 217832.89 
+      10,000 | 0.0878     | 113857.39 
