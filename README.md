@@ -14,6 +14,40 @@ A minimal banking system implementation designed for demonstration purposes, fea
     - Custom exception handling for banking-specific errors
     - Clean Python implementation
 
+```mermaid
+%% System Architecture Diagram for In-Memory Banking System
+graph TD
+    subgraph Python Banking System
+        A[Bank] -->|manages| B[Accounts]
+        B -->|1:N| C[Transactions]
+    end
+
+    subgraph Core Components
+        B --> D[Account Operations]
+        D --> D1[Deposit]
+        D --> D2[Withdraw]
+        D --> D3[Transfer]
+        D --> D4[Get Balance]
+        C --> E[Transaction Record]
+        E --> E1[Timestamp]
+        E --> E2[Amount]
+        E --> E3[Type]
+        E --> E4[Balance After]
+    end
+
+    subgraph Error Handling
+        F[Custom Exceptions]
+        F --> F1[InsufficientFundsError]
+        F --> F2[AccountNotFoundError]
+        F --> F3[NegativeAmountError]
+    end
+
+    style A fill:#2ecc71,stroke:#27ae60
+    style B fill:#3498db,stroke:#2980b9
+    style C fill:#9b59b6,stroke:#8e44ad
+    style D fill:#e74c3c,stroke:#c0392b
+    style F fill:#f39c12,stroke:#d35400
+```
 ---
 
 ## ⚙️ Tech Stack
