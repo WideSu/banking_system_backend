@@ -37,10 +37,10 @@ graph TD
 
     subgraph Error_Handling["Error Handling"]
         F[Custom Exceptions]
+        G[ValueError]
         F --> F1[InsufficientFundsError]
         F --> F2[AccountNotFoundError]
         F --> F3[NegativeAmountError]
-        G[ValueError]
     end
 
     %% Styling
