@@ -18,7 +18,7 @@ A minimal banking system implementation designed for demonstration purposes, fea
 %% System Architecture Diagram for In-Memory Banking System
 graph TD
     subgraph Python Banking System
-        A[Bank] -->|manages| B[Accounts]
+        A[Bank] -->|manages| B[Account]
         B -->|1:N| C[Transactions]
     end
 
@@ -41,11 +41,21 @@ graph TD
         F --> F3[NegativeAmountError]
     end
 
-    style A fill:#2ecc71,stroke:#27ae60
-    style B fill:#3498db,stroke:#2980b9
-    style C fill:#9b59b6,stroke:#8e44ad
-    style D fill:#e74c3c,stroke:#c0392b
-    style F fill:#f39c12,stroke:#d35400
+    %% High-Contrast Styling
+    style A fill:#1565C0,stroke:#0D47A1,color:#ffffff
+    style B fill:#00897B,stroke:#00695C,color:#ffffff
+    style C fill:#6A1B9A,stroke:#4A148C,color:#ffffff
+    style D fill:#D32F2F,stroke:#B71C1C,color:#ffffff
+    style F fill:#FF8F00,stroke:#E65100,color:#000000
+    
+    %% Component Styling
+    style D1,D2,D3,D4 fill:#E3F2FD,stroke:#90CAF9
+    style E1,E2,E3,E4 fill:#E8F5E9,stroke:#A5D6A7
+    style F1,F2,F3 fill:#FFF3E0,stroke:#FFCC80
+    
+    %% Graph Styling
+    classDef subgraph fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
+    class Python_Banking_System,Core_Operations,Error_Handling subgraph
 ```
 ---
 
