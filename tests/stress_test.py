@@ -1,9 +1,8 @@
-from pathlib import Path
-import time,os,sys
+import time
+import sys
 import random
-# Ensure package root is in path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from banking.core import Account, Bank
+import tracemalloc  # To track memory usage
+from banking.core import Bank
 
 def stress_test(num_transactions=1000):
     """Run performance test with given transaction count"""
@@ -15,6 +14,7 @@ def stress_test(num_transactions=1000):
         for i in range(10)  # 10 test accounts
     ]
     
+    tracemalloc.start()
     start_time = time.perf_counter()
     
     # Execute transactions
@@ -29,17 +29,21 @@ def stress_test(num_transactions=1000):
             pass  # Ignore errors for stress testing
     
     duration = time.perf_counter() - start_time
-    return duration, num_transactions
+    current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    
+    # Convert memory usage from bytes to MB
+    return duration, num_transactions, current / 1024 / 1024, peak / 1024 / 1024
 
 def run_test_suite():
-    test_cases = [1000, 2000, 3000, 5000, 10000]
-    print(f"{'Transactions':>12} | {'Time (s)':<10} | {'Txn/s':<10}")
-    print("-" * 45)
+    test_cases = [1000, 2000, 3000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000]
+    print(f"{'Transactions':>12} | {'Time (s)':<10} | {'Txn/s':<10} | {'Peak MB':<10}")
+    print("-" * 75)
     
     for n in test_cases:
-        duration, count = stress_test(n)
+        duration, count, current_mb, peak_mb = stress_test(n)
         txn_rate = count / duration
-        print(f"{n:>12,} | {duration:<10.4f} | {txn_rate:<10.2f}")
+        print(f"{n:>12,} | {duration:<10.4f} | {txn_rate:<10.2f} | {current_mb:<12.2f} | {peak_mb:<10.2f}")
 
 if __name__ == "__main__":
     run_test_suite()

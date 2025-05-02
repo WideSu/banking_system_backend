@@ -265,10 +265,13 @@ To see the result
 python -m tests.stress_test
 ```
 Key Metrics to Monitor
-- Throughput: Transactions per second (Txn/s)
-- Latency: Time to complete all transactions
-- Memory Usage: RAM consumption during test
+- **Throughput**: Transactions per second (Txn/s)
+- **Latency**: Time to complete all transactions
+- **Memory Usage**: RAM consumption during test
 - Error Rate: Failed transactions percentage
+
+stress_test_result(10M).png
+<img src="img/stress_test_result(10M).png" alt="Stress Test Result(10M transactions)" style="width:100%;">
 
 Example result:
 | Transactions | Time (s) | Throughput (txn/s) |
