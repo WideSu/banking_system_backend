@@ -40,6 +40,7 @@ graph TD
         F --> F1[InsufficientFundsError]
         F --> F2[AccountNotFoundError]
         F --> F3[NegativeAmountError]
+        G[ValueError]
     end
 
     %% Styling
