@@ -265,9 +265,11 @@ tests/test_banking.py::test_get_account_not_found PASSED                        
 ```
 
 ### 4. Stress Test
-In the stress test, this system has 85s delay and 272.07MB peak memory usage for 10M transactions. For 1M transactions, this system have a delay of 7.7s and 272MB peak memory usage.
+In the stress test, this system has **85s** delay and **272.07MB** peak memory usage for **10M transactions**. 
 
-To see the result, you can run the command below in console
+For **1M transactions**, this system have a delay of **7.7s** and **272MB** peak memory usage.
+
+To run the stress test, you can run the command below in console
 ```bash
 python -m tests.stress_test
 ```
