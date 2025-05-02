@@ -83,14 +83,26 @@ graph TD
 
 ```
 banking_system/
-├── LICENSE
-├── README.md
-├── banking                 # Python package
-│   ├── __init__.py         # Empty file to make it a package
-│   └── core.py             # Our main banking code
-├── requirements.txt
-└── tests
-    └── test_banking.py     # Our test file
+├── banking/                      # Core application package
+│   ├── __init__.py               # Package initialization
+│   └── core.py                   # Main banking logic (Account, Bank classes)
+│
+├── tests/                        # All test files
+│   ├── __init__.py               # Test package initialization
+│   ├── unit/                     # Unit tests
+│   │   ├── __init__.py
+│   │   └── test_core.py          # Basic functionality tests
+│   │
+│   └── performance/              # Performance tests
+│       ├── __init__.py
+│       └── stress_test.py        # Stress/load testing
+│
+├── img/                         # Image used in README file
+│   └── stress_test_result(10M).png # Stress test result
+│
+├── .gitignore                    # Ignores .DS_Store, __pycache__, etc.
+├── requirements.txt              # Dependencies
+└── README.md                     # Project documentation
 ```
 
 ---
@@ -140,7 +152,7 @@ rootdir: /Users/huanganni/Documents/GitHub/banking_system
 plugins: cov-6.1.1
 collected 13 items                                                                                                                                                                    
 
-tests/test_banking.py .............                                                                                                                                             [100%]
+tests/test_core.py .............                                                                                                                                             [100%]
 
 ========================================= tests coverage =========================================
 ________________________________ coverage: platform darwin, python 3.10.9-final-0 _________________________________
@@ -167,70 +179,70 @@ rootdir: /Users/huanganni/Documents/GitHub/banking_system
 plugins: cov-6.1.1
 collected 13 items                                                                                                                                                                    
 
-tests/test_banking.py::test_account_creation 
+tests/test_core.py::test_account_creation 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_account_creation
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_account_creation
+INFO     test_core:test_core.py:19 🚀 Starting test: test_account_creation
+INFO     test_core:test_core.py:22 ✅ Test passed: test_account_creation
 PASSED                                                                                                                                                                          [  7%]
-tests/test_banking.py::test_deposit 
+tests/test_core.py::test_deposit 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_deposit
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_deposit
+INFO     test_core:test_core.py:19 🚀 Starting test: test_deposit
+INFO     test_core:test_core.py:22 ✅ Test passed: test_deposit
 PASSED                                                                                                                                                                          [ 15%]
-tests/test_banking.py::test_withdraw 
+tests/test_core.py::test_withdraw 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_withdraw
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_withdraw
+INFO     test_core:test_core.py:19 🚀 Starting test: test_withdraw
+INFO     test_core:test_core.py:22 ✅ Test passed: test_withdraw
 PASSED                                                                                                                                                                          [ 23%]
-tests/test_banking.py::test_withdraw_insufficient_funds 
+tests/test_core.py::test_withdraw_insufficient_funds 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_withdraw_insufficient_funds
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_withdraw_insufficient_funds
+INFO     test_core:test_core.py:19 🚀 Starting test: test_withdraw_insufficient_funds
+INFO     test_core:test_core.py:22 ✅ Test passed: test_withdraw_insufficient_funds
 PASSED                                                                                                                                                                          [ 30%]
-tests/test_banking.py::test_negative_deposit 
+tests/test_core.py::test_negative_deposit 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_negative_deposit
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_negative_deposit
+INFO     test_core:test_core.py:19 🚀 Starting test: test_negative_deposit
+INFO     test_core:test_core.py:22 ✅ Test passed: test_negative_deposit
 PASSED                                                                                                                                                                          [ 38%]
-tests/test_banking.py::test_negative_withdraw 
+tests/test_core.py::test_negative_withdraw 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_negative_withdraw
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_negative_withdraw
+INFO     test_core:test_core.py:19 🚀 Starting test: test_negative_withdraw
+INFO     test_core:test_core.py:22 ✅ Test passed: test_negative_withdraw
 PASSED                                                                                                                                                                          [ 46%]
-tests/test_banking.py::test_transfer_successful 
+tests/test_core.py::test_transfer_successful 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_transfer_successful
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_transfer_successful
+INFO     test_core:test_core.py:19 🚀 Starting test: test_transfer_successful
+INFO     test_core:test_core.py:22 ✅ Test passed: test_transfer_successful
 PASSED                                                                                                                                                                          [ 53%]
-tests/test_banking.py::test_transfer_to_self 
+tests/test_core.py::test_transfer_to_self 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_transfer_to_self
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_transfer_to_self
+INFO     test_core:test_core.py:19 🚀 Starting test: test_transfer_to_self
+INFO     test_core:test_core.py:22 ✅ Test passed: test_transfer_to_self
 PASSED                                                                                                                                                                          [ 61%]
-tests/test_banking.py::test_create_account 
+tests/test_core.py::test_create_account 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_create_account
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_create_account
+INFO     test_core:test_core.py:19 🚀 Starting test: test_create_account
+INFO     test_core:test_core.py:22 ✅ Test passed: test_create_account
 PASSED                                                                                                                                                                          [ 69%]
-tests/test_banking.py::test_create_duplicate_account 
+tests/test_core.py::test_create_duplicate_account 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_create_duplicate_account
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_create_duplicate_account
+INFO     test_core:test_core.py:19 🚀 Starting test: test_create_duplicate_account
+INFO     test_core:test_core.py:22 ✅ Test passed: test_create_duplicate_account
 PASSED                                                                                                                                                                          [ 76%]
-tests/test_banking.py::test_create_account_negative_balance 
+tests/test_core.py::test_create_account_negative_balance 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_create_account_negative_balance
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_create_account_negative_balance
+INFO     test_core:test_core.py:19 🚀 Starting test: test_create_account_negative_balance
+INFO     test_core:test_core.py:22 ✅ Test passed: test_create_account_negative_balance
 PASSED                                                                                                                                                                          [ 84%]
-tests/test_banking.py::test_get_account_success 
+tests/test_core.py::test_get_account_success 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_get_account_success
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_get_account_success
+INFO     test_core:test_core.py:19 🚀 Starting test: test_get_account_success
+INFO     test_core:test_core.py:22 ✅ Test passed: test_get_account_success
 PASSED                                                                                                                                                                          [ 92%]
-tests/test_banking.py::test_get_account_not_found 
+tests/test_core.py::test_get_account_not_found 
 --------------------------------------- live log call ---------------------------------------
-INFO     test_banking:test_banking.py:19 🚀 Starting test: test_get_account_not_found
-INFO     test_banking:test_banking.py:22 ✅ Test passed: test_get_account_not_found
+INFO     test_core:test_core.py:19 🚀 Starting test: test_get_account_not_found
+INFO     test_core:test_core.py:22 ✅ Test passed: test_get_account_not_found
 PASSED                                                                                                                                                                          [100%]
 ```
 
@@ -249,19 +261,19 @@ rootdir: /Users/huanganni/Documents/GitHub/banking_system
 plugins: cov-6.1.1
 collected 13 items                                                                                                                                                                    
 
-tests/test_banking.py::test_account_creation PASSED                                                                                                                             [  7%]
-tests/test_banking.py::test_deposit PASSED                                                                                                                                      [ 15%]
-tests/test_banking.py::test_withdraw PASSED                                                                                                                                     [ 23%]
-tests/test_banking.py::test_withdraw_insufficient_funds PASSED                                                                                                                  [ 30%]
-tests/test_banking.py::test_negative_deposit PASSED                                                                                                                             [ 38%]
-tests/test_banking.py::test_negative_withdraw PASSED                                                                                                                            [ 46%]
-tests/test_banking.py::test_transfer_successful PASSED                                                                                                                          [ 53%]
-tests/test_banking.py::test_transfer_to_self PASSED                                                                                                                             [ 61%]
-tests/test_banking.py::test_create_account PASSED                                                                                                                               [ 69%]
-tests/test_banking.py::test_create_duplicate_account PASSED                                                                                                                     [ 76%]
-tests/test_banking.py::test_create_account_negative_balance PASSED                                                                                                              [ 84%]
-tests/test_banking.py::test_get_account_success PASSED                                                                                                                          [ 92%]
-tests/test_banking.py::test_get_account_not_found PASSED                                                                                                                        [100%]                                                      
+tests/test_core.py::test_account_creation PASSED                                                                                                                             [  7%]
+tests/test_core.py::test_deposit PASSED                                                                                                                                      [ 15%]
+tests/test_core.py::test_withdraw PASSED                                                                                                                                     [ 23%]
+tests/test_core.py::test_withdraw_insufficient_funds PASSED                                                                                                                  [ 30%]
+tests/test_core.py::test_negative_deposit PASSED                                                                                                                             [ 38%]
+tests/test_core.py::test_negative_withdraw PASSED                                                                                                                            [ 46%]
+tests/test_core.py::test_transfer_successful PASSED                                                                                                                          [ 53%]
+tests/test_core.py::test_transfer_to_self PASSED                                                                                                                             [ 61%]
+tests/test_core.py::test_create_account PASSED                                                                                                                               [ 69%]
+tests/test_core.py::test_create_duplicate_account PASSED                                                                                                                     [ 76%]
+tests/test_core.py::test_create_account_negative_balance PASSED                                                                                                              [ 84%]
+tests/test_core.py::test_get_account_success PASSED                                                                                                                          [ 92%]
+tests/test_core.py::test_get_account_not_found PASSED                                                                                                                        [100%]                                                      
 ```
 
 ### 4. Stress Test
