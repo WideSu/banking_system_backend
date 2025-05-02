@@ -1,53 +1,31 @@
 name: CI
 
-on:
-  push:
-    branches: [main]
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10.17'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-    - name: Test with pytest
-      run: |
-        pytest tests/ --cov=banking --cov-report=xml
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage.xml
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Post coverage status
-      run: |
-        source venv/bin/activate
-        python .github/scripts/post_coverage_status.py
-      env:
-        ACTIONS_STEP_DEBUG: true
-        ACTIONS_RUNNER_DEBUG: true
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_SHA: ${{ github.sha }}
-        GITHUB_REPOSITORY: ${{ github.repository }}
-    - name: Generate coverage badge
-      run: |
-        source venv/bin/activate
-        coverage-badge -o coverage.svg -f
-    - name: Commit badge
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add coverage.svg
-        git commit -m "Update coverage badge" || echo "No changes to commit"
-        git push
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=. --cov-report=xml
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage.xml
