@@ -103,6 +103,7 @@ git clone https://github.com/WideSu/banking_system_backend.git
 cd banking-system
 
 ### 2. Set up the virtual environment
+Run the command below in console
 ```bash
 python -m venv venv
 source venv/bin/activate      # On Windows: venv\Scripts\activate
@@ -126,6 +127,7 @@ Example output:
 ```
 ### 3. Run Unit Tests
 - 1. Test coverage
+Run the command below in console
 ```bash
 pytest --cov=banking tests/
 ```
@@ -151,6 +153,7 @@ TOTAL                    55      0   100%
 ======================================= 13 passed in 0.03s ========================================
 ```
 - 2. With log for each test case (execuetion time, result)
+Run the command below in console
 ```bash
 pytest --log-cli-level=INFO -v
 ```
@@ -231,6 +234,7 @@ PASSED                                                                          
 ```
 
 - 3. Without log info (an overview of the results for all tests)
+Run the command below in console
 ```bash
 pytest -v
 ```
@@ -260,8 +264,10 @@ tests/test_banking.py::test_get_account_not_found PASSED                        
 ```
 
 ### 4. Stress Test
-To see the result
-```
+In the stress test, this system has 85s delay and 272.07MB peak memory usage for 10M transactions. For 1M transactions, this system have a delay of 7.7s and 272MB peak memory usage.
+
+To see the result, you can run the command below in console
+```bash
 python -m tests.stress_test
 ```
 Key Metrics to Monitor
