@@ -1,0 +1,21 @@
+[flake8]
+# Maximum line length allowed (PEP 8 standard is 79 characters)
+max-line-length = 79
+
+# Exclude certain directories or files from being checked
+exclude = .git,__pycache__,venv,workflow,htmlcov
+
+# Enable the F401 check for unused imports
+select = F401
+
+# Ignore some warnings or errors that you might not want to enforce
+# E.g., we might ignore the line-length warning for specific lines
+ignore = E203, W503
+
+# Enable additional checks
+# - E: Errors (like syntax errors)
+# - F: Failing codes (like unused imports F401)
+# - W: Warnings (like line too long W191)
+# - C: Cyclomatic complexity
+# - N: Naming conventions
+# - D: Docstrings
