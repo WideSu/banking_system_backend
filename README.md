@@ -32,8 +32,6 @@ graph TD
         E --> E1[Timestamp]
         E --> E2[Amount]
         E --> E3[Type]
-        E3--> E4[Transferred to]
-        E3--> E5[Received from]
     end
 
     subgraph Error Handling
