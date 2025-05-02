@@ -1,6 +1,18 @@
 # 🏦 In-Memory Banking System
 
-A lightweight in-memory banking system implemented in Python. This project supports multiple users, each with zero or more bank accounts, and allows basic banking operations with no persistent storage.
+A minimal banking system implementation designed for demonstration purposes, featuring:
+- Account Management:
+    - Bank account creation with initial balance
+    - Support for multiple users (one account per user)
+- Core Banking Operations:
+    - Deposits and withdrawals (no overdraft, and check invalid deposit/withdraw amount)
+    - Inter-account fund transfers
+    - Complete transaction history tracking
+
+- Technical Characteristics:
+    - Pure in-memory operation (no persistent storage)
+    - Custom exception handling for banking-specific errors
+    - Clean Python implementation
 
 ---
 
@@ -17,14 +29,14 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 
 - ✅ Create users and accounts with an initial balance
 - ✅ Each user may have **one** account (assumed)
-    - stored using **Dictionary** in {'name':'balance'} pair
-    - one user multiple accounts requires authentications which obeys KISS principle
+    - Accounts are stored using **Dictionary** in {'name':'balance'} pair
+    - ⚠️ One user multiple accounts requires authentications which obeys KISS principle
 - ✅ Deposit funds into any owned account
 - ✅ Withdraw funds (no overdraft allowed)
-    - invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
+    - Invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
 - ✅ Transfer funds between accounts 
-- ✅ View account transaction history *(optional)*
-    - transaction records are stored in **List**
+- ✅ View account transaction history
+    - Transaction records are stored in **List**
 
 ---
 
