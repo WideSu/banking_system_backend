@@ -32,7 +32,6 @@ graph TD
         E --> E1[Timestamp]
         E --> E2[Amount]
         E --> E3[Type]
-        E --> E4[Balance After]
     end
 
     subgraph Error_Handling["Error Handling"]
