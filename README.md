@@ -9,7 +9,7 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 - **Python** (3.10+)
 - **PyTest** (unit testing)
 - **Python venv** (virtual environment)
-- **GitHub Actions** (CI/CD pipeline)
+- **GitHub Actions** (CI/CD pipeline for install, lint, build, test coverage check>=98%)
 
 ---
 
