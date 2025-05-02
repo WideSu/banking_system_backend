@@ -141,7 +141,7 @@ Example output:
 ['Account created with balance: 100.00', 'Deposited: 500.00', 'Withdrawn: 200.00']
 ```
 ### 4. Run Unit Tests
-- 1. Test coverage
+#### 4.1 Test coverage
 Run the command below in console
 ```bash
 pytest --cov=banking tests/
@@ -167,7 +167,7 @@ banking/core.py          55      0   100%
 TOTAL                    55      0   100%
 ======================================= 13 passed in 0.03s ========================================
 ```
-- 2. With log for each test case (execuetion time, result)
+#### 4.2 With log for each test case (execuetion time, result)
 Run the command below in console
 ```bash
 pytest --log-cli-level=INFO -v
@@ -248,7 +248,7 @@ INFO     test_core:test_core.py:22 ✅ Test passed: test_get_account_not_found
 PASSED                                                                                                                                                                          [100%]
 ```
 
-- 3. Without log info (an overview of the results for all tests)
+#### 4.3 Without log info (an overview of the results for all tests)
 Run the command below in console
 ```bash
 pytest -v
@@ -314,7 +314,7 @@ Example result:
 | 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
-## To do(Advanced)
+## 🤔 To do(Advanced)
 - Should I handle concurrency?
 - What if someone is making a lot of transactions and blocking others?
     - Add per-account locks, retry logic, and rate limiting together to ensure safety and fairness.
