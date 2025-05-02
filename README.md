@@ -115,6 +115,7 @@ banking_system/
 ```bash
 git clone https://github.com/WideSu/banking_system_backend.git
 cd banking-system
+```
 
 ### 2. Set up the virtual environment
 Run the command below in console
@@ -124,7 +125,7 @@ source venv/bin/activate      # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Example Use
+### 3. Example Usage
 You can run an interactive session like this:
 ```python
 >>> from banking.core import *
@@ -139,7 +140,7 @@ Example output:
 ```bash
 ['Account created with balance: 100.00', 'Deposited: 500.00', 'Withdrawn: 200.00']
 ```
-### 3. Run Unit Tests
+### 4. Run Unit Tests
 - 1. Test coverage
 Run the command below in console
 ```bash
@@ -313,6 +314,7 @@ Example result:
 | 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
-## To do
-- What if someone is making a lot of transactions and blocking others?
+## To do(Advanced)
 - Should I handle concurrency?
+- What if someone is making a lot of transactions and blocking others?
+    - Add per-account locks, retry logic, and rate limiting together to ensure safety and fairness.
