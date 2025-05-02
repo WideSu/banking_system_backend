@@ -12,7 +12,8 @@ A minimal banking system implementation designed for demonstration purposes, fea
 - Technical Characteristics:
     - Pure in-memory operation (no persistent storage)
     - Custom exception handling for banking-specific errors
-    - Clean Python implementation
+    - GitHub CICD for install, lint, build, unit test coverage check
+    - Lint check for any unused import
 
 ```mermaid
 %% System Architecture Diagram for In-Memory Banking System
