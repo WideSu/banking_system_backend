@@ -20,4 +20,34 @@ A lightweight in-memory banking system implemented in Python. This project suppo
 - ✅ Deposit funds into any owned account  
 - ✅ Withdraw funds (no overdraft allowed)  
 - ✅ Transfer funds between accounts  
-- ✅ View account transaction history *(opt*
+- ✅ View account transaction history *(optional)*
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/WideSu/banking_system_backend.git
+cd banking-system
+
+### 2. Set up the virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate      # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## 🧠 Example Use
+You can run an interactive session like this:
+```python
+>>> from banking import BankingSystem
+>>> bank = BankingSystem()
+>>> user = bank.create_user("Alice")
+>>> account = bank.create_account("Alice", "Savings", 1000)
+>>> account.deposit(500)
+>>> account.withdraw(200)
+>>> account.get_transaction_history()
+```
