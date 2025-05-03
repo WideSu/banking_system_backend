@@ -1,7 +1,7 @@
 import time
 import random
 import tracemalloc  # To track memory usage
-from banking.core import Bank
+from banking.models import Bank
 
 def stress_test(num_transactions=1000):
     """Run performance test with given transaction count"""
