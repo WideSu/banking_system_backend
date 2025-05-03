@@ -98,7 +98,7 @@ banking_system/
 │       ├── __init__.py
 │       └── stress_test.py        # Stress/load testing
 │
-├── img/                         # Image used in README file
+├── img/                          # Image used in README file
 │   └── stress_test_result(10M).png # Stress test result
 │
 ├── .gitignore                    # Ignores .DS_Store, __pycache__, etc.
