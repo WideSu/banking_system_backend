@@ -1,5 +1,5 @@
 from typing import Dict, List
-from threading import Lock
+from threading import RLock
 
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 
@@ -9,7 +9,7 @@ class Account:
         self.name = name
         self.balance = initial_balance
         self.transactions: List[str] = [f'Account created with balance: {initial_balance:.2f}']
-        self._lock = Lock()  # Add lock
+        self._lock = RLock()  # Add lock
 
     def deposit(self, amount: float):
         self._validate_positive_amount(amount)
