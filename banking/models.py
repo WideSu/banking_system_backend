@@ -1,4 +1,5 @@
 from typing import Dict, List
+from threading import Lock
 
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 
@@ -8,26 +9,33 @@ class Account:
         self.name = name
         self.balance = initial_balance
         self.transactions: List[str] = [f'Account created with balance: {initial_balance:.2f}']
+        self._lock = Lock()  # Add lock
 
     def deposit(self, amount: float):
         self._validate_positive_amount(amount)
-        self.balance += amount
-        self._record_transaction('Deposited', amount)
+        with self._lock:
+            self.balance += amount
+            self._record_transaction('Deposited', amount)
 
     def withdraw(self, amount: float):
         self._validate_positive_amount(amount)
-        if amount > self.balance:
-            raise InsufficientFundsError(f"Cannot withdraw {amount:.2f}; balance is only {self.balance:.2f}")
-        self.balance -= amount
-        self._record_transaction('Withdrawn', amount)
+        with self._lock:
+            if amount > self.balance:
+                raise InsufficientFundsError(f"Cannot withdraw {amount:.2f}; balance is only {self.balance:.2f}")
+            self.balance -= amount
+            self._record_transaction('Withdrawn', amount)
 
     def transfer(self, target: 'Account', amount: float):
         if self == target:
             raise ValueError("Cannot transfer to the same account")
-        self.withdraw(amount)
-        target.deposit(amount)
-        self._record_transaction('Transferred to', amount, target.name)
-        target._record_transaction('Received from', amount, self.name)
+        # Lock both accounts to prevent deadlock
+        first, second = sorted([self, target], key=lambda x: id(x))
+        with first._lock:
+            with second._lock:
+                self.withdraw(amount)
+                target.deposit(amount)
+                self._record_transaction('Transferred to', amount, target.name)
+                target._record_transaction('Received from', amount, self.name)
 
     def get_transaction_history(self) -> List[str]:
         return self.transactions.copy()
