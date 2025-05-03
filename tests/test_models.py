@@ -47,6 +47,18 @@ def log_test(enable_time_logging=True, level=logging.INFO):
 
 # -------- Account Tests --------
 @log_test()
+def test_account_init_and_history_copy():
+    acc = Account("alice", 100.0)
+    # __init__ behavior
+    assert acc.name == "alice"
+    assert acc.balance == 100.0
+    hist = acc.get_transaction_history()
+    assert hist == [f"Account created with balance: {100.0:.2f}"]
+    # ensure get_transaction_history returns a copy
+    hist.append("tamper")
+    assert "tamper" not in acc.transactions
+
+@log_test()
 def test_account_creation():
     acc = Account("Alice", 100.0)
     assert acc.name == "Alice"
@@ -86,7 +98,7 @@ def test_negative_withdraw():
         acc.withdraw(0.0)
 
 @log_test()
-def test_transfer_successful():
+def test_transfer_success_and_history():
     acc1 = Account("Alice", 100.0)
     acc2 = Account("Bob", 50.0)
     acc1.transfer(acc2, 25.0)
@@ -100,7 +112,6 @@ def test_transfer_to_self():
     acc = Account("Alice", 100.0)
     with pytest.raises(ValueError):
         acc.transfer(acc, 10.0)
-
 
 # -------- Bank Tests --------
 @log_test()

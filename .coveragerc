@@ -1,0 +1,4 @@
+[run]
+# omit any file in a tests/ directory
+omit =
+    */tests/*
