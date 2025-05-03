@@ -56,8 +56,8 @@ graph TD
 ---
 
 ## ⚙️ Tech Stack
-
 - **Python** (3.10+)
+- **FastAPI** (RESTful API)
 - **PyTest** (unit testing)
 - **Python venv** (virtual environment)
 - **GitHub Actions** (CI/CD pipeline for install, lint, build, test coverage check>=98%)
