@@ -13,6 +13,7 @@ A minimal banking system implementation designed for demonstration purposes, fea
     - Custom exception handling for banking-specific errors
     - GitHub CICD for install, lint, build, unit test coverage check
     - Lint check for any unused import
+    - [RLock](https://docs.python.org/3/library/threading.html#rlock-objects) makes it safe to call methods like withdraw, deposit and transfer
 
 ```mermaid
 %% System Architecture Diagram for In-Memory Banking System
@@ -71,9 +72,12 @@ graph TD
     - ⚠️ One user multiple accounts requires authentications which obeys **KISS principle**
     - We assume that there is only **one currency** for simplicity.
 - ✅ Deposit funds into any owned account
+    - 🔒 Lock the account during deposit operations
 - ✅ Withdraw funds (no overdraft allowed)
+    - 🔒 Lock the account during withdraw operations
     - Invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
-- ✅ Transfer funds between accounts 
+- ✅ Transfer funds between accounts
+    - 🔒 Lock both accounts during withdraw operations
 - ✅ View account transaction history
     - Transaction records are stored in **List**
 
