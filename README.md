@@ -144,8 +144,7 @@ Example output:
 #### 4.1 Test coverage
 Run the command below in console to show the unit test result with coverage
 ```bash
-coverage run -m pytest
-coverage report -m
+pytest --cov=banking tests/
 ```
 Example output:
 ```bash
