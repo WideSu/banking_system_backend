@@ -1,5 +1,5 @@
 import pytest
-from banking.core import Account, Bank, InsufficientFundsError, AccountNotFoundError, NegativeAmountError
+from banking.models import Account, Bank, InsufficientFundsError, AccountNotFoundError, NegativeAmountError
 
 # -------- Logging --------
 import logging, time
