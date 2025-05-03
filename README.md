@@ -96,6 +96,7 @@ banking_system/
 │   ├── __init__.py               # Test package initialization
 │   ├──── test_models.py          # Basic functionality tests
 │   ├──── test_main.py            # Basic API tests
+│   ├──── test_logger.py          # Log the execuetion time and test info by decorator
 │   │
 │   └── performance/              # Performance tests
 │       ├── __init__.py
