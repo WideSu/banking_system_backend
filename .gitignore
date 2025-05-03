@@ -7,6 +7,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+# Ignore __pycache__ directories in any subfolder (redundant, but explicit)
+**/__pycache__/
 # Virtual environments
 venv/
 env/

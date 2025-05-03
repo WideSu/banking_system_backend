@@ -90,9 +90,7 @@ banking_system/
 │
 ├── tests/                        # All test files
 │   ├── __init__.py               # Test package initialization
-│   ├── unit/                     # Unit tests
-│   │   ├── __init__.py
-│   │   └── test_core.py          # Basic functionality tests
+│   ├── test_core.py              # Basic functionality tests
 │   │
 │   └── performance/              # Performance tests
 │       ├── __init__.py
