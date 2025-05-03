@@ -109,6 +109,10 @@ banking_system/
 ---
 
 ## Endpoints
+You can also view the automatically generated API docs by FastAPI via http://localhost:8000/docs#/
+
+<img src="img/endpoints.jpg" alt="Endpoints Documentation" style="width:100%;">
+
 ### Create Account
 #### POST `/accounts`
 Create a new bank account.
