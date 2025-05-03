@@ -1,5 +1,4 @@
 import pytest
-# Ensure package root is in path
 from banking.core import Account, Bank, InsufficientFundsError, AccountNotFoundError, NegativeAmountError
 
 # -------- Logging --------

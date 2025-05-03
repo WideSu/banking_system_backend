@@ -1,5 +1,3 @@
-# banking.py
-
 from typing import Dict, List
 
 
