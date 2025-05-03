@@ -17,8 +17,8 @@ The unit test cases in the banking_system project cover various functionalities 
 - Tests for successful transfers between accounts.
 - Tests for handling errors during transfers, such as invalid accounts or insufficient funds.
 6. Concurrency:
-- Tests for concurrent deposits to ensure thread safety.
-- Tests for concurrent withdrawals to validate system behavior under simultaneous operations.
+- Tests for concurrent withdrawals/deposits to ensure thread safety.
+- Tests for concurrent transfer to validate system behavior under simultaneous operations.
 
 These tests ensure the core functionalities of the banking system are robust and handle edge cases effectively.
 ### Command and result
