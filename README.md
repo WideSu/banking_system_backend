@@ -1,5 +1,4 @@
 # 🏦 In-Memory Banking System
-
 A minimal banking system implementation designed for demonstration purposes, featuring:
 - Account Management:
     - Bank account creation with initial balance
@@ -56,8 +55,8 @@ graph TD
 ---
 
 ## ⚙️ Tech Stack
-
 - **Python** (3.10+)
+- **FastAPI** (RESTful API)
 - **PyTest** (unit testing)
 - **Python venv** (virtual environment)
 - **GitHub Actions** (CI/CD pipeline for install, lint, build, test coverage check>=98%)
@@ -86,11 +85,13 @@ graph TD
 banking_system/
 ├── banking/                      # Core application package
 │   ├── __init__.py               # Package initialization
-│   └── core.py                   # Main banking logic (Account, Bank classes)
+│   ├── models.py                 # Main banking logic (Account, Bank classes)
+│   └── main.py                   # Main restful API logic
 │
 ├── tests/                        # All test files
 │   ├── __init__.py               # Test package initialization
-│   ├── test_core.py              # Basic functionality tests
+│   ├──── test_models.py          # Basic functionality tests
+│   ├──── test_main.py            # Basic API tests
 │   │
 │   └── performance/              # Performance tests
 │       ├── __init__.py
@@ -98,6 +99,10 @@ banking_system/
 │
 ├── img/                          # Image used in README file
 │   └── stress_test_result(10M).png # Stress test result
+├── docs/                         # Documentation for other topics
+│   ├── EndPoints.md              # API reference documentation
+│   ├── FutureWork.md             # Record the things I am working on 
+│   └── UnitTest.py               # Command to run unit tests
 │
 ├── .gitignore                    # Ignores .DS_Store, __pycache__, etc.
 ├── requirements.txt              # Dependencies
@@ -107,7 +112,6 @@ banking_system/
 ---
 
 ## 🚀 Getting Started
-
 ### 1. Clone the repository
 
 ```bash
@@ -124,7 +128,8 @@ pip install -r requirements.txt
 ```
 
 ### 3. Example Usage
-You can run an interactive session like this:
+#### 3.1 Interactive python
+You can run an interactive session like this in python interactive mode under main project directory(at the same level as requirements.txt):
 ```python
 >>> from banking.core import *
 >>> bank = Bank()
@@ -138,145 +143,15 @@ Example output:
 ```bash
 ['Account created with balance: 100.00', 'Deposited: 500.00', 'Withdrawn: 200.00']
 ```
-### 4. Run Unit Tests
-#### 4.1 Test coverage
-Run the command below in console
-```bash
-pytest --cov=banking tests/
+
+#### 3.2 API Endpoints
+Or you can run the API using the commands below in console.
 ```
-Example output:
-```bash
-======================================= test session starts =======================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: cov-6.1.1
-collected 13 items                                                                                                                                                                    
-
-tests/test_core.py .............                                                                                                                                             [100%]
-
-========================================= tests coverage =========================================
-________________________________ coverage: platform darwin, python 3.10.9-final-0 _________________________________
-
-Name                  Stmts   Miss  Cover   Missing
-------
-banking/__init__.py       0      0   100%
-banking/core.py          55      0   100%
-------
-TOTAL                    55      0   100%
-======================================= 13 passed in 0.03s ========================================
+uvicorn main:app --reload
 ```
-#### 4.2 With log for each test case (execuetion time, result)
-Run the command below in console
-```bash
-pytest --log-cli-level=INFO -v
-```
-Example output:
-```bash
-======================================= test session starts =======================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0 -- /Users/huanganni/Documents/GitHub/banking_system/venv/bin/python
-cachedir: .pytest_cache
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: cov-6.1.1
-collected 13 items                                                                                                                                                                    
+After that you will be able to use the api at http://localhost:8000/ and see the documentation at http://localhost:8000/docs#/
 
-tests/test_core.py::test_account_creation 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_account_creation
-INFO     test_core:test_core.py:22 ✅ Test passed: test_account_creation
-PASSED                                                                                                                                                                          [  7%]
-tests/test_core.py::test_deposit 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_deposit
-INFO     test_core:test_core.py:22 ✅ Test passed: test_deposit
-PASSED                                                                                                                                                                          [ 15%]
-tests/test_core.py::test_withdraw 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_withdraw
-INFO     test_core:test_core.py:22 ✅ Test passed: test_withdraw
-PASSED                                                                                                                                                                          [ 23%]
-tests/test_core.py::test_withdraw_insufficient_funds 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_withdraw_insufficient_funds
-INFO     test_core:test_core.py:22 ✅ Test passed: test_withdraw_insufficient_funds
-PASSED                                                                                                                                                                          [ 30%]
-tests/test_core.py::test_negative_deposit 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_negative_deposit
-INFO     test_core:test_core.py:22 ✅ Test passed: test_negative_deposit
-PASSED                                                                                                                                                                          [ 38%]
-tests/test_core.py::test_negative_withdraw 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_negative_withdraw
-INFO     test_core:test_core.py:22 ✅ Test passed: test_negative_withdraw
-PASSED                                                                                                                                                                          [ 46%]
-tests/test_core.py::test_transfer_successful 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_transfer_successful
-INFO     test_core:test_core.py:22 ✅ Test passed: test_transfer_successful
-PASSED                                                                                                                                                                          [ 53%]
-tests/test_core.py::test_transfer_to_self 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_transfer_to_self
-INFO     test_core:test_core.py:22 ✅ Test passed: test_transfer_to_self
-PASSED                                                                                                                                                                          [ 61%]
-tests/test_core.py::test_create_account 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_create_account
-INFO     test_core:test_core.py:22 ✅ Test passed: test_create_account
-PASSED                                                                                                                                                                          [ 69%]
-tests/test_core.py::test_create_duplicate_account 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_create_duplicate_account
-INFO     test_core:test_core.py:22 ✅ Test passed: test_create_duplicate_account
-PASSED                                                                                                                                                                          [ 76%]
-tests/test_core.py::test_create_account_negative_balance 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_create_account_negative_balance
-INFO     test_core:test_core.py:22 ✅ Test passed: test_create_account_negative_balance
-PASSED                                                                                                                                                                          [ 84%]
-tests/test_core.py::test_get_account_success 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_get_account_success
-INFO     test_core:test_core.py:22 ✅ Test passed: test_get_account_success
-PASSED                                                                                                                                                                          [ 92%]
-tests/test_core.py::test_get_account_not_found 
---------------------------------------- live log call ---------------------------------------
-INFO     test_core:test_core.py:19 🚀 Starting test: test_get_account_not_found
-INFO     test_core:test_core.py:22 ✅ Test passed: test_get_account_not_found
-PASSED                                                                                                                                                                          [100%]
-```
-
-#### 4.3 Without log info (an overview of the results for all tests)
-Run the command below in console
-```bash
-pytest -v
-```
-
-Example output:
-```bash
-========================================= test session starts =========================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0 -- /Users/huanganni/Documents/GitHub/banking_system/venv/bin/python
-cachedir: .pytest_cache
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: cov-6.1.1
-collected 13 items                                                                                                                                                                    
-
-tests/test_core.py::test_account_creation PASSED                                                                                                                             [  7%]
-tests/test_core.py::test_deposit PASSED                                                                                                                                      [ 15%]
-tests/test_core.py::test_withdraw PASSED                                                                                                                                     [ 23%]
-tests/test_core.py::test_withdraw_insufficient_funds PASSED                                                                                                                  [ 30%]
-tests/test_core.py::test_negative_deposit PASSED                                                                                                                             [ 38%]
-tests/test_core.py::test_negative_withdraw PASSED                                                                                                                            [ 46%]
-tests/test_core.py::test_transfer_successful PASSED                                                                                                                          [ 53%]
-tests/test_core.py::test_transfer_to_self PASSED                                                                                                                             [ 61%]
-tests/test_core.py::test_create_account PASSED                                                                                                                               [ 69%]
-tests/test_core.py::test_create_duplicate_account PASSED                                                                                                                     [ 76%]
-tests/test_core.py::test_create_account_negative_balance PASSED                                                                                                              [ 84%]
-tests/test_core.py::test_get_account_success PASSED                                                                                                                          [ 92%]
-tests/test_core.py::test_get_account_not_found PASSED                                                                                                                        [100%]                                                      
-```
-
-### 4. Stress Test
+### 4. Performance
 In the stress test, this system has **85s** delay and **272.07MB** peak memory usage for **10M transactions**. 
 
 For **1M transactions**, this system have a delay of **7.7s** and **272MB** peak memory usage.
@@ -312,15 +187,7 @@ Example result:
 | 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
-## 🤔 To do(Advanced)
-- Should I add API endpoint for it? (e.g. FastAPI)
-
-- Should I handle concurrency?
-    - I don’t need to handle concurrency right now if you're only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
-    - But if we're planning to:
-        - Expose it as a web service,
-        - Load test it,
-        - Or run it in production or multi-user simulation,
-    - Then we should start thinking about thread-safety.
-- What if someone is making a lot of transactions and blocking others?
-    - Add per-account locks, retry logic, and rate limiting together to ensure safety and fairness.
+## Other things you may wanna know
+- [API Reference](docs/EndPoints.md)
+- [Unit Tests Commands and Results](docs/UnitTest.md)
+- [Future Work(concurrency)](docs/FutureWork.md)
