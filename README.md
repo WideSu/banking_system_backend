@@ -1,5 +1,4 @@
 # 🏦 In-Memory Banking System
-
 A minimal banking system implementation designed for demonstration purposes, featuring:
 - Account Management:
     - Bank account creation with initial balance
@@ -100,6 +99,10 @@ banking_system/
 │
 ├── img/                          # Image used in README file
 │   └── stress_test_result(10M).png # Stress test result
+├── docs/                         # Documentation for other topics
+│   ├── EndPoints.md              # API reference documentation
+│   ├── FutureWork.md             # Record the things I am working on 
+│   └── UnitTest.py               # Command to run unit tests
 │
 ├── .gitignore                    # Ignores .DS_Store, __pycache__, etc.
 ├── requirements.txt              # Dependencies
@@ -108,127 +111,6 @@ banking_system/
 
 ---
 
-## Endpoints
-You can also view the automatically generated API docs by FastAPI via http://localhost:8000/docs#/
-
-<img src="img/endpoints.jpg" alt="Endpoints Documentation" style="width:100%;">
-
-### Create Account
-#### POST `/accounts`
-Create a new bank account.
-#### Request Body (JSON)
-```json
-{
-  "name": "Alice",
-  "initial_balance": 100.0
-}
-```
-####  Response (200 OK)
-```json
-{
-  "message": "Account created for Alice with balance 100.0"
-}
-```
-### Response (400 Bad Request)
-```json
-{
-  "detail": "Initial balance cannot be negative"
-}
-```
-### Get Account Balance
-#### GET `/accounts/{name}/balance`
-Retrieve the current balance of an account.
-#### Response (200 OK):
-```json
-{
-  "name": "Alice",
-  "balance": 100.0
-}
-```
-#### Response (404 Not Found)
-```json
-{
-  "detail": "Account 'Alice' not found"
-}
-```
-### Deposit
-#### POST `/accounts/{name}/deposit`
-Add money to an account.
-#### Request Body
-```json
-{
-  "amount": 50.0
-}
-```
-#### Response (200 OK)
-```json
-{
-  "message": "Deposited 50.0 to Alice. New balance: 150.0"
-}
-```
-#### Response (400 Bad Request)
-```json
-{
-  "detail": "Amount must be positive"
-}
-```
-### Withdraw
-#### POST `/accounts/{name}/withdraw`
-Withdraw money from an account.
-#### Request Body
-```json
-{
-  "amount": 30.0
-}
-```
-#### Response (200 OK)
-```json
-{
-  "message": "Withdrew 30.0 from Alice. New balance: 120.0"
-}
-```
-#### Response (400 Bad Request or 403 Forbidden)
-```json
-{
-  "detail": "Cannot withdraw 500.0; balance is only 100.0"
-}
-```
-### Transfer
-#### POST `/accounts/{from_name}/transfer/{to_name}`
-Transfer money between accounts.
-#### Request Body
-```json
-{
-  "amount": 25.0
-}
-```
-### Response (200 OK)
-```json
-{
-  "message": "Transferred 25.0 from Alice to Bob"
-}
-```
-### Response (400 or 403 Error)
-```json
-{
-  "detail": "Cannot transfer to the same account" // or insufficient funds
-}
-```
-### Transaction History
-#### GET `/accounts/{name}/history`
-Retrieve transaction history.
-#### Response (200 OK)
-```json
-{
-  "name": "Alice",
-  "transactions": [
-    "Account created with balance: 100.00",
-    "Deposited: 50.00",
-    "Withdrawn: 30.00",
-    "Transferred to: 25.00 Bob"
-  ]
-}
-```
 ## 🚀 Getting Started
 ### 1. Clone the repository
 
@@ -246,7 +128,8 @@ pip install -r requirements.txt
 ```
 
 ### 3. Example Usage
-You can run an interactive session like this:
+#### 3.1 Interactive python
+You can run an interactive session like this in python interactive mode under main project directory(at the same level as requirements.txt):
 ```python
 >>> from banking.core import *
 >>> bank = Bank()
@@ -260,203 +143,15 @@ Example output:
 ```bash
 ['Account created with balance: 100.00', 'Deposited: 500.00', 'Withdrawn: 200.00']
 ```
-### 4. Run Unit Tests
-#### 4.1 Test coverage
-Run the command below in console to show the unit test result with coverage
-```bash
-pytest --cov=banking tests/
+
+#### 3.2 API Endpoints
+Or you can run the API using the commands below in console.
 ```
-Example output:
-```bash
-======================================== test session starts ========================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: anyio-4.9.0
-collected 22 items                                                                                                                                                                    
-
-tests/test_main.py ........                                                                                                                                                     [ 36%]
-tests/test_models.py ..............                                                                                                                                             [100%]
-
-======================================== 22 passed in 0.30s =========================================
-Name                  Stmts   Miss  Cover   Missing
----------------------------------------------------
-banking/__init__.py       0      0   100%
-banking/errors.py         6      0   100%
-banking/main.py          55      0   100%
-banking/models.py        50      0   100%
----------------------------------------------------
-TOTAL                   111      0   100%
-
+uvicorn main:app --reload
 ```
-#### 4.2 With log for each test case (execuetion time, result)
-Run the command below in console
-```bash
-pytest --log-cli-level=INFO -v
-```
-Example output:
-```bash
-======================================== test session starts ========================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0 -- /Users/huanganni/Documents/GitHub/banking_system/venv/bin/python3
-cachedir: .pytest_cache
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: anyio-4.9.0
-collected 21 items                                                                                                                                                                    
+After that you will be able to use the api at http://localhost:8000/ and see the documentation at http://localhost:8000/docs#/
 
-tests/test_main.py::test_create_account_success 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-PASSED                                                                                                                                                                          [  4%]
-tests/test_main.py::test_create_account_negative_balance 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 400 Bad Request"
-PASSED                                                                                                                                                                          [  9%]
-tests/test_main.py::test_get_balance_existing 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: GET http://testserver/accounts/carol "HTTP/1.1 200 OK"
-PASSED                                                                                                                                                                          [ 14%]
-tests/test_main.py::test_get_balance_not_found 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: GET http://testserver/accounts/doesnotexist "HTTP/1.1 404 Not Found"
-PASSED                                                                                                                                                                          [ 19%]
-tests/test_main.py::test_deposit_success 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/deposit "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: GET http://testserver/accounts/dan "HTTP/1.1 200 OK"
-PASSED                                                                                                                                                                          [ 23%]
-tests/test_main.py::test_deposit_negative_amount 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/deposit "HTTP/1.1 400 Bad Request"
-PASSED                                                                                                                                                                          [ 28%]
-tests/test_main.py::test_withdraw_success_and_insufficient 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/withdraw "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/withdraw "HTTP/1.1 400 Bad Request"
-PASSED                                                                                                                                                                          [ 33%]
-tests/test_main.py::test_transfer_success_and_errors 
----------------------------------------- live log call ----------------------------------------
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/accounts/ "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/transfer "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: GET http://testserver/accounts/gina "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: GET http://testserver/accounts/hank "HTTP/1.1 200 OK"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/transfer "HTTP/1.1 400 Bad Request"
-INFO     httpx:_client.py:1025 HTTP Request: POST http://testserver/transfer "HTTP/1.1 400 Bad Request"
-PASSED                                                                                                                                                                          [ 38%]
-tests/test_models.py::test_account_creation 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_account_creation
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_account_creation
-PASSED                                                                                                                                                                          [ 42%]
-tests/test_models.py::test_deposit 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_deposit
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_deposit
-PASSED                                                                                                                                                                          [ 47%]
-tests/test_models.py::test_withdraw 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_withdraw
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_withdraw
-PASSED                                                                                                                                                                          [ 52%]
-tests/test_models.py::test_withdraw_insufficient_funds 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_withdraw_insufficient_funds
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_withdraw_insufficient_funds
-PASSED                                                                                                                                                                          [ 57%]
-tests/test_models.py::test_negative_deposit 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_negative_deposit
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_negative_deposit
-PASSED                                                                                                                                                                          [ 61%]
-tests/test_models.py::test_negative_withdraw 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_negative_withdraw
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_negative_withdraw
-PASSED                                                                                                                                                                          [ 66%]
-tests/test_models.py::test_transfer_successful 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_transfer_successful
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_transfer_successful
-PASSED                                                                                                                                                                          [ 71%]
-tests/test_models.py::test_transfer_to_self 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_transfer_to_self
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_transfer_to_self
-PASSED                                                                                                                                                                          [ 76%]
-tests/test_models.py::test_create_account 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_create_account
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_create_account
-PASSED                                                                                                                                                                          [ 80%]
-tests/test_models.py::test_create_duplicate_account 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_create_duplicate_account
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0001s: test_create_duplicate_account
-PASSED                                                                                                                                                                          [ 85%]
-tests/test_models.py::test_create_account_negative_balance 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_create_account_negative_balance
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0000s: test_create_account_negative_balance
-PASSED                                                                                                                                                                          [ 90%]
-tests/test_models.py::test_get_account_success 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_get_account_success
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0000s: test_get_account_success
-PASSED                                                                                                                                                                          [ 95%]
-tests/test_models.py::test_get_account_not_found 
----------------------------------------- live log call ----------------------------------------
-INFO     tests.test_models:test_models.py:25 🚀 Starting test: test_get_account_not_found
-INFO     tests.test_models:test_models.py:33 ✅ Test passed in 0.0000s: test_get_account_not_found
-PASSED                                                                                                                                                                          [100%]
-
-======================================== 21 passed in 0.22s ========================================
-```
-
-#### 4.3 Without log info (an overview of the results for all tests)
-Run the command below in console
-```bash
-pytest -v
-```
-
-Example output:
-```bash
-========================================= test session starts ========================================
-platform darwin -- Python 3.10.9, pytest-8.3.5, pluggy-1.5.0 -- /Users/huanganni/Documents/GitHub/banking_system/venv/bin/python3
-cachedir: .pytest_cache
-rootdir: /Users/huanganni/Documents/GitHub/banking_system
-plugins: anyio-4.9.0
-collected 21 items                                                                                                                                                                    
-
-tests/test_main.py::test_create_account_success PASSED                                                                                                                          [  4%]
-tests/test_main.py::test_create_account_negative_balance PASSED                                                                                                                 [  9%]
-tests/test_main.py::test_get_balance_existing PASSED                                                                                                                            [ 14%]
-tests/test_main.py::test_get_balance_not_found PASSED                                                                                                                           [ 19%]
-tests/test_main.py::test_deposit_success PASSED                                                                                                                                 [ 23%]
-tests/test_main.py::test_deposit_negative_amount PASSED                                                                                                                         [ 28%]
-tests/test_main.py::test_withdraw_success_and_insufficient PASSED                                                                                                               [ 33%]
-tests/test_main.py::test_transfer_success_and_errors PASSED                                                                                                                     [ 38%]
-tests/test_models.py::test_account_creation PASSED                                                                                                                              [ 42%]
-tests/test_models.py::test_deposit PASSED                                                                                                                                       [ 47%]
-tests/test_models.py::test_withdraw PASSED                                                                                                                                      [ 52%]
-tests/test_models.py::test_withdraw_insufficient_funds PASSED                                                                                                                   [ 57%]
-tests/test_models.py::test_negative_deposit PASSED                                                                                                                              [ 61%]
-tests/test_models.py::test_negative_withdraw PASSED                                                                                                                             [ 66%]
-tests/test_models.py::test_transfer_successful PASSED                                                                                                                           [ 71%]
-tests/test_models.py::test_transfer_to_self PASSED                                                                                                                              [ 76%]
-tests/test_models.py::test_create_account PASSED                                                                                                                                [ 80%]
-tests/test_models.py::test_create_duplicate_account PASSED                                                                                                                      [ 85%]
-tests/test_models.py::test_create_account_negative_balance PASSED                                                                                                               [ 90%]
-tests/test_models.py::test_get_account_success PASSED                                                                                                                           [ 95%]
-tests/test_models.py::test_get_account_not_found PASSED                                                                                                                         [100%]
-
-======================================== 21 passed in 0.22s ========================================
-                                                    
-```
-
-### 4. Stress Test
+### 4. Performance
 In the stress test, this system has **85s** delay and **272.07MB** peak memory usage for **10M transactions**. 
 
 For **1M transactions**, this system have a delay of **7.7s** and **272MB** peak memory usage.
@@ -492,15 +187,7 @@ Example result:
 | 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
-## 🤔 To do(Advanced)
-- Should I add API endpoint for it? (e.g. FastAPI)
-
-- Should I handle concurrency?
-    - I don’t need to handle concurrency right now if you're only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
-    - But if we're planning to:
-        - Expose it as a web service,
-        - Load test it,
-        - Or run it in production or multi-user simulation,
-    - Then we should start thinking about thread-safety.
-- What if someone is making a lot of transactions and blocking others?
-    - Add per-account locks, retry logic, and rate limiting together to ensure safety and fairness.
+## Other things you may wanna know
+- [API Reference](docs/EndPoints.md)
+- [Unit Tests Commands and Results](docs/UnitTest.md)
+- [Future Work(concurrency)](docs/FutureWork.md)

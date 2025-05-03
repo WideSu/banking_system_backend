@@ -1,0 +1,14 @@
+## 🤔 To do
+- Should I add API endpoint for it? (e.g. FastAPI)
+    - In branch FastAPI
+- What if someone transfer and deposit at the sametime?
+    - Add lock
+- Should I handle concurrency?
+    - I don’t need to handle concurrency right now if you're only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
+    - But if we're planning to:
+        - Expose it as a web service,
+        - Load test it,
+        - Or run it in production or multi-user simulation,
+    - Then we should start thinking about thread-safety.
+- What if someone is making a lot of transactions and blocking others?
+    - Add per-account locks, retry logic, and rate limiting together to ensure safety and fairness.
