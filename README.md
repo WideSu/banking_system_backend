@@ -315,7 +315,7 @@ Example result:
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
 ## 🤔 To do(Advanced)
-_ Should I add API endpoint for it? (e.g. FastAPI)
+- Should I add API endpoint for it? (e.g. FastAPI)
 
 - Should I handle concurrency?
     - I don’t need to handle concurrency right now if you're only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
