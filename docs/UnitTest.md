@@ -1,4 +1,27 @@
-### Run Unit Tests
+### Unit Test Design
+The unit test cases in the banking_system project cover various functionalities of the system, ensuring its reliability and correctness. Here's a description of the test cases:
+
+1. Account Management:
+- Tests for creating accounts successfully.
+- Tests for handling errors like creating accounts with negative balances.
+
+2. Balance Retrieval:
+- Tests for retrieving the balance of existing accounts.
+- Tests for handling non-existent accounts.
+3. Deposits:
+- Tests for successful deposits into accounts.
+- Tests for handling invalid deposit amounts, such as negative values.
+4. Withdrawals:
+- Tests for successful withdrawals and handling insufficient funds.
+5. Transfers:
+- Tests for successful transfers between accounts.
+- Tests for handling errors during transfers, such as invalid accounts or insufficient funds.
+6. Concurrency:
+- Tests for concurrent deposits to ensure thread safety.
+- Tests for concurrent withdrawals to validate system behavior under simultaneous operations.
+
+These tests ensure the core functionalities of the banking system are robust and handle edge cases effectively.
+### Command and result
 #### 1. Test coverage
 Run the command below in console to show the unit test result with coverage
 ```bash

@@ -192,6 +192,6 @@ Example result:
 | 20,000,000   | 170.7883 | 117,104.01 | 5,481.01|
 
 ## Other things you may wanna know
-- [API Reference](docs/EndPoints.md)
-- [Unit Tests Commands and Results](docs/UnitTest.md)
+- [API Design](docs/EndPoints.md)
+- [Unit Tests Design](docs/UnitTest.md)
 - [Future Work(concurrency)](docs/FutureWork.md)
