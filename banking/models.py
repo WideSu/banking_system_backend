@@ -1,16 +1,6 @@
 from typing import Dict, List
 
-
-class InsufficientFundsError(Exception):
-    pass
-
-
-class AccountNotFoundError(Exception):
-    pass
-
-
-class NegativeAmountError(Exception):
-    pass
+from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 
 
 class Account:
