@@ -4,17 +4,6 @@ from threading import RLock
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 
 
-class InsufficientFundsError(Exception):
-    pass
-
-
-class AccountNotFoundError(Exception):
-    pass
-
-
-class NegativeAmountError(Exception):
-    pass
-
 class Account:
     def __init__(self, name: str, initial_balance: float):
         self.name = name
