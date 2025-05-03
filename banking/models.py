@@ -57,14 +57,16 @@ class Bank:
         self._lock = RLock()
 
     def create_account(self, name: str, initial_balance: float) -> Account:
-        with self._lock:
-            if name in self.accounts:
-                raise ValueError("Account already exists.")
-            if initial_balance < 0:
-                raise ValueError("Initial balance cannot be negative")
-            account = Account(name, initial_balance)
-            self.accounts[name] = account
-            return account
+        if name in self.accounts:
+            raise ValueError("Account already exists.")
+        if initial_balance < 0:
+            raise ValueError("Initial balance cannot be negative")
+        account = Account(name, initial_balance)
+        self.accounts[name] = account
+        return account
 
     def get_account(self, name: str) -> Account:
-        return self.accounts.get(name)
+        account = self.accounts.get(name)
+        if account is None:
+            raise AccountNotFoundError(f"Account '{name}' not found")
+        return account
