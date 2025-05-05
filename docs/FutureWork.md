@@ -1,10 +1,10 @@
 ## 🤔 To do
-- Should I add API endpoint for it? (e.g. FastAPI)
-    - In branch FastAPI
+- Add API endpoint for it? (e.g. FastAPI)
+    - ✅ Done, FastAPI branch is merged into main branch
 - What if someone transfer and deposit at the sametime?
     - Add lock
 - Should I handle concurrency?
-    - I don’t need to handle concurrency right now if you're only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
+    - I don’t need to handle concurrency if I am only calling methods in sequence (e.g., CLI scripts, single-threaded simulation).
     - But if we're planning to:
         - Expose it as a web service,
         - Load test it,
