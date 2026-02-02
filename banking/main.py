@@ -25,6 +25,11 @@ class Transfer(BaseModel):
     amount: float
 
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Simple Banking API"}
+
+
 @app.post("/accounts/")
 async def create_account(data: AccountCreate):
     try:
