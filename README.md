@@ -7,8 +7,6 @@
 
 A high-performance, in-memory banking system backend built with **Python** and **FastAPI**. Designed for demonstration, it showcases best practices in concurrent programming (Asyncio), RESTful API design, and containerization (Docker).
 
----
-
 ## ✨ Features
 
 - **⚡ High Performance**: Pure in-memory operations with **O(1)** lookup times.
@@ -16,8 +14,6 @@ A high-performance, in-memory banking system backend built with **Python** and *
 - **🐳 Docker Ready**: Containerized for easy deployment to any cloud platform (Render, AWS, GCP).
 - **🛡️ Robust Error Handling**: Custom exceptions for domain-specific errors (Insufficient Funds, Account Not Found, etc.).
 - **✅ Comprehensive Testing**: 100% test coverage with **PyTest** and **GitHub Actions** CI/CD.
-
----
 
 ## 🏗️ Architecture
 
@@ -55,8 +51,6 @@ graph TD
     
     class Python_Banking_System,Core_Operations,Error_Handling fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
 ```
-
----
 
 ## ⚙️ Tech Stack
 
@@ -111,8 +105,6 @@ pip install -r requirements.txt
 python -m banking.main
 ```
 
----
-
 ## 🧪 Testing
 
 We maintain **100% code coverage**. You can run the test suite using PyTest.
@@ -124,8 +116,6 @@ python -m pytest
 # Run with coverage report
 python -m pytest --cov=banking --cov-report=term-missing
 ```
-
----
 
 ## 📊 Performance
 
@@ -142,8 +132,6 @@ Run the stress test yourself:
 ```bash
 python -m tests.performance.stress_test
 ```
-
----
 
 ## 📂 Project Structure
 
@@ -163,8 +151,6 @@ banking_system_backend/
 └── requirements.txt      # Project Dependencies
 ```
 
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -174,8 +160,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
----
 
 ## 📄 License
 
