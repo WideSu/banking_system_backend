@@ -13,7 +13,8 @@ A minimal banking system implementation designed for demonstration purposes, fea
     - Custom exception handling for banking-specific errors
     - GitHub CICD for install, lint, build, unit test coverage check
     - Lint check for any unused import
-    - [RLock](https://docs.python.org/3/library/threading.html#rlock-objects) makes it safe to call methods like withdraw, deposit and transfer
+    - **Asyncio** makes it safe to handle concurrent requests
+    - **Dockerized** for easy deployment
 
 ```mermaid
 %% System Architecture Diagram for In-Memory Banking System
@@ -56,10 +57,11 @@ graph TD
 ---
 
 ## ⚙️ Tech Stack
-- **Python** (3.10+)
+- **Python** (3.9+)
 - **FastAPI** (RESTful API)
 - **PyTest** (unit testing)
 - **Python venv** (virtual environment)
+- **Docker** (Containerization)
 - **GitHub Actions** (CI/CD pipeline for install, lint, build, test coverage check>=98%)
 
 ---
@@ -72,12 +74,12 @@ graph TD
     - ⚠️ One user multiple accounts requires authentications which obeys **KISS principle**
     - We assume that there is only **one currency** for simplicity.
 - ✅ Deposit funds into any owned account
-    - 🔒 Lock the account during deposit operations
+    - 🔒 Concurrency safe (handled by single-threaded event loop)
 - ✅ Withdraw funds (no overdraft allowed)
-    - 🔒 Lock the account during withdraw operations
+    - 🔒 Concurrency safe (handled by single-threaded event loop)
     - Invalid operations trigger appropriate custom exceptions (`InsufficientFundsError`, `AccountNotFoundError`, `NegativeAmountError`) with contextual error messages, while `ValueError` handles general parameter validation.
 - ✅ Transfer funds between accounts
-    - 🔒 Lock both accounts during withdraw operations
+    - 🔒 Concurrency safe (handled by single-threaded event loop)
 - ✅ View account transaction history
     - Transaction records are stored in **List**
 
@@ -135,7 +137,7 @@ pip install -r requirements.txt
 #### 3.1 Interactive python
 You can run an interactive session like this in python interactive mode under main project directory(at the same level as requirements.txt):
 ```python
->>> from banking.core import *
+>>> from banking.models import Bank
 >>> bank = Bank()
 >>> account = bank.create_account("Alice", 100.0)
 >>> account.deposit(500)
@@ -150,8 +152,12 @@ Example output:
 
 #### 3.2 API Endpoints
 Or you can run the API using the commands below in console.
-```
-uvicorn main:app --reload
+```bash
+# Using Python
+python -m banking.main
+
+# Using Docker
+docker-compose up --build
 ```
 After that you will be able to use the api at http://localhost:8000/ and see the documentation at http://localhost:8000/docs#/
 

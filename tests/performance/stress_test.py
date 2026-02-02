@@ -1,6 +1,12 @@
 import time
 import random
 import tracemalloc  # To track memory usage
+import sys
+import os
+
+# Add the project root to sys.path so we can import 'banking'
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
 from banking.models import Bank
 
 def stress_test(num_transactions=1000):
