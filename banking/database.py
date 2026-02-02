@@ -1,6 +1,7 @@
 
 import aiosqlite
-from typing import Optional, List
+import asyncio
+from typing import List
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 
 DB_PATH = "banking.db"
@@ -9,6 +10,7 @@ class Database:
     def __init__(self, db_path=DB_PATH):
         self.db_path = db_path
         self._connection = None
+        self._lock = asyncio.Lock()
 
     async def get_db(self):
         if self.db_path == ":memory:":
@@ -53,6 +55,10 @@ class Database:
              await db.execute("DROP TABLE IF EXISTS accounts")
              await db.commit()
              await self._init_tables(db)
+             # Re-init lock for the new test context if needed, 
+             # but usually the lock object is reusable if we didn't close it.
+             # However, if the loop changed (pytest-asyncio), we MUST create a new lock.
+             self._lock = asyncio.Lock()
         else:
              async with aiosqlite.connect(self.db_path) as db:
                 await db.execute("DROP TABLE IF EXISTS transactions")
@@ -167,34 +173,40 @@ class Database:
 
         if self.db_path == ":memory:":
             db = await self.get_db()
-            try:
-                await db.execute("BEGIN TRANSACTION")
+            
+            # Lazy init lock if it doesn't exist (e.g. production first run)
+            if self._lock is None:
+                self._lock = asyncio.Lock()
                 
-                async with db.execute("SELECT balance FROM accounts WHERE name = ?", (sender,)) as cursor:
-                    row = await cursor.fetchone()
-                    if row is None:
-                        raise AccountNotFoundError(f"Account '{sender}' not found")
-                    sender_balance = row[0]
+            async with self._lock:
+                try:
+                    await db.execute("BEGIN TRANSACTION")
+                    
+                    async with db.execute("SELECT balance FROM accounts WHERE name = ?", (sender,)) as cursor:
+                        row = await cursor.fetchone()
+                        if row is None:
+                            raise AccountNotFoundError(f"Account '{sender}' not found")
+                        sender_balance = row[0]
 
-                if amount > sender_balance:
-                    raise InsufficientFundsError(f"Cannot withdraw {amount:.2f}; balance is only {sender_balance:.2f}")
+                    if amount > sender_balance:
+                        raise InsufficientFundsError(f"Cannot withdraw {amount:.2f}; balance is only {sender_balance:.2f}")
 
-                async with db.execute("SELECT 1 FROM accounts WHERE name = ?", (recipient,)) as cursor:
-                    if await cursor.fetchone() is None:
-                        raise AccountNotFoundError(f"Account '{recipient}' not found")
+                    async with db.execute("SELECT 1 FROM accounts WHERE name = ?", (recipient,)) as cursor:
+                        if await cursor.fetchone() is None:
+                            raise AccountNotFoundError(f"Account '{recipient}' not found")
 
-                await db.execute("UPDATE accounts SET balance = balance - ? WHERE name = ?", (amount, sender))
-                await db.execute("UPDATE accounts SET balance = balance + ? WHERE name = ?", (amount, recipient))
-                
-                await db.execute("INSERT INTO transactions (account_name, action, amount, other_party) VALUES (?, ?, ?, ?)", 
-                               (sender, "Transferred to", amount, recipient))
-                await db.execute("INSERT INTO transactions (account_name, action, amount, other_party) VALUES (?, ?, ?, ?)", 
-                               (recipient, "Received from", amount, sender))
-                
-                await db.commit()
-            except Exception as e:
-                await db.rollback()
-                raise e
+                    await db.execute("UPDATE accounts SET balance = balance - ? WHERE name = ?", (amount, sender))
+                    await db.execute("UPDATE accounts SET balance = balance + ? WHERE name = ?", (amount, recipient))
+                    
+                    await db.execute("INSERT INTO transactions (account_name, action, amount, other_party) VALUES (?, ?, ?, ?)", 
+                                   (sender, "Transferred to", amount, recipient))
+                    await db.execute("INSERT INTO transactions (account_name, action, amount, other_party) VALUES (?, ?, ?, ?)", 
+                                   (recipient, "Received from", amount, sender))
+                    
+                    await db.commit()
+                except Exception as e:
+                    await db.rollback()
+                    raise e
         else:
             async with aiosqlite.connect(self.db_path) as db:
                 try:
