@@ -25,11 +25,11 @@ async def test_race_condition_transfer():
         iterations = 100
         
         async def transfer_a_to_b():
-            response = await client.post("/transfer", json={"sender": "Alice", "recipient": "Bob", "amount": 10.0})
+            response = await client.post("/transfers", json={"sender": "Alice", "recipient": "Bob", "amount": 10.0})
             return response.status_code
 
         async def transfer_b_to_a():
-            response = await client.post("/transfer", json={"sender": "Bob", "recipient": "Alice", "amount": 10.0})
+            response = await client.post("/transfers", json={"sender": "Bob", "recipient": "Alice", "amount": 10.0})
             return response.status_code
 
         tasks = []

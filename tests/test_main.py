@@ -40,7 +40,7 @@ def test_get_balance_not_found():
 @log_test()
 def test_deposit_success():
     client.post("/accounts/", json={"name": "dan", "initial_balance": 0.0})
-    resp = client.post("/deposit", json={"name": "dan", "amount": 25.5})
+    resp = client.post("/accounts/dan/deposits", json={"amount": 25.5})
     assert resp.status_code == 200
     assert "25.50 deposited to dan" in resp.json()["message"]
 
@@ -50,17 +50,17 @@ def test_deposit_success():
 @log_test()
 def test_deposit_negative_amount():
     client.post("/accounts/", json={"name": "eve", "initial_balance": 10.0})
-    resp = client.post("/deposit", json={"name": "eve", "amount": -5.0})
+    resp = client.post("/accounts/eve/deposits", json={"amount": -5.0})
     assert resp.status_code == 400
     assert "positive" in resp.json()["detail"].lower()
 @log_test()
 def test_withdraw_success_and_insufficient():
     client.post("/accounts/", json={"name": "frank", "initial_balance": 30.0})
-    ok = client.post("/withdraw", json={"name": "frank", "amount": 10.0})
+    ok = client.post("/accounts/frank/withdrawals", json={"amount": 10.0})
     assert ok.status_code == 200
 
     # now withdraw too much
-    too_much = client.post("/withdraw", json={"name": "frank", "amount": 50.0})
+    too_much = client.post("/accounts/frank/withdrawals", json={"amount": 50.0})
     assert too_much.status_code == 400
     assert "balance is only" in too_much.json()["detail"]
 @log_test()
@@ -69,7 +69,7 @@ def test_transfer_success_and_errors():
     client.post("/accounts/", json={"name": "hank", "initial_balance": 0.0})
 
     # good transfer
-    ok = client.post("/transfer", json={
+    ok = client.post("/transfers", json={
         "sender": "gina", "recipient": "hank", "amount": 40.0
     })
     assert ok.status_code == 200
@@ -79,14 +79,14 @@ def test_transfer_success_and_errors():
     assert client.get("/accounts/hank").json()["balance"] == pytest.approx(40.0)
 
     # transfer too much
-    err = client.post("/transfer", json={
+    err = client.post("/transfers", json={
         "sender": "gina", "recipient": "hank", "amount": 1000.0
     })
     assert err.status_code == 400
     assert "balance is only" in err.json()["detail"]
 
     # same-account transfer
-    err2 = client.post("/transfer", json={
+    err2 = client.post("/transfers", json={
         "sender": "gina", "recipient": "gina", "amount": 10.0
     })
     assert err2.status_code == 400
@@ -99,15 +99,15 @@ def setup_accounts():
 
 @log_test()
 def deposit_task(name, amount):
-    return client.post("/deposit", json={"name": name, "amount": amount})
+    return client.post(f"/accounts/{name}/deposits", json={"amount": amount})
 
 @log_test()
 def withdraw_task(name, amount):
-    return client.post("/withdraw", json={"name": name, "amount": amount})
+    return client.post(f"/accounts/{name}/withdrawals", json={"amount": amount})
 
 @log_test()
 def transfer_task(sender, recipient, amount):
-    return client.post("/transfer", json={"sender": sender, "recipient": recipient, "amount": amount})
+    return client.post("/transfers", json={"sender": sender, "recipient": recipient, "amount": amount})
 
 @log_test()
 def test_concurrent_deposits():

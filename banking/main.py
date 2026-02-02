@@ -74,7 +74,7 @@ async def transfer(data: Transfer):
         raise HTTPException(400, str(e))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     import uvicorn
     host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", 8000))
