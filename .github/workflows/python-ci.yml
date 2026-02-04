@@ -33,6 +33,7 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           pytest \
+            -q \
             --cov=banking \
             --cov-report=xml \
             --cov-fail-under=98
