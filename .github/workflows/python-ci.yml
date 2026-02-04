@@ -1,78 +1,119 @@
 name: CI
-
 on:
   push:
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  install:
+  ci-base:
     runs-on: ubuntu-latest
+    outputs:
+      python-cache-key: ${{ steps.cache-python.outputs.cache-primary-key }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Cache Python dependencies
+        id: cache-python
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            __pycache__
+          key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
+
       - name: Install dependencies
+        if: steps.cache-python.outputs.cache-hit != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install flake8 pytest-cov
+
   lint:
     runs-on: ubuntu-latest
+    needs: ci-base
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Restore Python dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            __pycache__
+          key: ${{ needs.ci-base.outputs.python-cache-key }}
 
       - name: Run Linter (flake8)
         run: flake8 . --max-line-length=79
 
   build:
     runs-on: ubuntu-latest
-    needs: install  # Ensure the install job has passed before running build
+    needs: ci-base
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+
+      - name: Restore Python dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            __pycache__
+          key: ${{ needs.ci-base.outputs.python-cache-key }}
+
       - name: Build the project
         run: |
-          # Add your build commands here (if applicable)
+          **Add your build commands here (if applicable)**
           echo "Building project..."
+          **Example: python setup.py sdist bdist_wheel**
 
   test:
     runs-on: ubuntu-latest
-    needs: [install, build]  # Ensure install and build jobs have passed before running tests
+    needs: [ci-base, build]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+
+      - name: Restore Python dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            __pycache__
+          key: ${{ needs.ci-base.outputs.python-cache-key }}
+
       - name: Run tests with coverage threshold
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
           pytest --cov=banking --cov-report=xml --cov-fail-under=98
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
