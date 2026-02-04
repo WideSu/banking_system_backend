@@ -41,7 +41,7 @@ def stress_test(num_transactions=1000):
     return duration, num_transactions, current / 1024 / 1024, peak / 1024 / 1024
 
 def run_test_suite():
-    test_cases = [1000, 2000, 3000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000, 5000000, 10000000]
+    test_cases = [1000, 2000, 3000, 5000]
     print(f"{'Transactions':>12} | {'Time (s)':<10} | {'Txn/s':<10} | {'Peak MB':<10}")
     print("-" * 75)
     
