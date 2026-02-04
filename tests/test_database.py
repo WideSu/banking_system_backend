@@ -1,5 +1,4 @@
 import pytest
-import aiosqlite
 from banking.database import Database
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
 

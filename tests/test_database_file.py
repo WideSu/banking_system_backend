@@ -2,9 +2,8 @@ import pytest
 import pytest_asyncio
 import aiosqlite
 import os
-import asyncio
 from banking.database import Database
-from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
+from banking.errors import AccountNotFoundError, InsufficientFundsError
 
 TEST_DB_PATH = "test_banking_file.db"
 
