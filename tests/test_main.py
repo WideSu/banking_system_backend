@@ -1,7 +1,6 @@
 
 import pytest
 import asyncio
-from banking.main import app, db
 
 @pytest.mark.asyncio
 async def test_create_account_success(client):

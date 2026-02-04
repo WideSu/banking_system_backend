@@ -1,8 +1,6 @@
 
 import pytest
 import asyncio
-import httpx
-from banking.main import app, db
 
 # We need to run the app in a way that allows concurrent requests.
 # Since we are testing an ASGI app, we can use httpx.AsyncClient.
