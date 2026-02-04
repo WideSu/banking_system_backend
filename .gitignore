@@ -20,3 +20,7 @@ env/
 # Additional macOS metadata
 .AppleDouble
 .LSOverride
+
+# Database files
+*.db
+coverage.xml
