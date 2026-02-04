@@ -1,13 +1,20 @@
 from fastapi import FastAPI, HTTPException
 import os
+from contextlib import asynccontextmanager
 from pydantic import BaseModel
 from banking.errors import AccountNotFoundError, InsufficientFundsError, NegativeAmountError
-from banking.models import (
-    Bank
-)
+from banking.database import Database
 
-app = FastAPI(title="Simple Banking API")
-bank = Bank()
+db = Database()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize DB
+    await db.init_db()
+    yield
+    # Shutdown: (Optional cleanup)
+
+app = FastAPI(title="Simple Banking API", lifespan=lifespan)
 
 
 class AccountCreate(BaseModel):
@@ -33,8 +40,8 @@ async def root():
 @app.post("/accounts/")
 async def create_account(data: AccountCreate):
     try:
-        account = bank.create_account(data.name, data.initial_balance)
-        return {"message": f"Account '{account.name}' created."}
+        await db.create_account(data.name, data.initial_balance)
+        return {"message": f"Account '{data.name}' created."}
     except ValueError as e:
         raise HTTPException(400, str(e))
 
@@ -42,8 +49,8 @@ async def create_account(data: AccountCreate):
 @app.get("/accounts/{name}")
 async def get_balance(name: str):
     try:
-        account = bank.get_account(name)
-        return {"name": account.name, "balance": account.balance}
+        balance = await db.get_balance(name)
+        return {"name": name, "balance": balance}
     except AccountNotFoundError as e:
         raise HTTPException(404, str(e))
 
@@ -51,8 +58,7 @@ async def get_balance(name: str):
 @app.post("/accounts/{name}/deposits")
 async def deposit(name: str, data: TransactionAmount):
     try:
-        account = bank.get_account(name)
-        account.deposit(data.amount)
+        await db.deposit(name, data.amount)
         return {"message": f"{data.amount:.2f} deposited to {name}"}
     except (AccountNotFoundError, NegativeAmountError) as e:
         raise HTTPException(400, str(e))
@@ -61,8 +67,7 @@ async def deposit(name: str, data: TransactionAmount):
 @app.post("/accounts/{name}/withdrawals")
 async def withdraw(name: str, data: TransactionAmount):
     try:
-        account = bank.get_account(name)
-        account.withdraw(data.amount)
+        await db.withdraw(name, data.amount)
         return {"message": f"{data.amount:.2f} withdrawn from {name}"}
     except (AccountNotFoundError, NegativeAmountError, InsufficientFundsError) as e:
         raise HTTPException(400, str(e))
@@ -71,9 +76,7 @@ async def withdraw(name: str, data: TransactionAmount):
 @app.post("/transfers")
 async def transfer(data: Transfer):
     try:
-        sender = bank.get_account(data.sender)
-        recipient = bank.get_account(data.recipient)
-        sender.transfer(recipient, data.amount)
+        await db.transfer(data.sender, data.recipient, data.amount)
         return {"message": f"{data.amount:.2f} transferred from {data.sender} to {data.recipient}"}
     except (AccountNotFoundError, NegativeAmountError, InsufficientFundsError, ValueError) as e:
         raise HTTPException(400, str(e))
