@@ -5,9 +5,17 @@ on:
     branches:
       - main
       - develop
+    paths-ignore:
+      - "docs/**"
+      - "img/**"
+      - "**/*.md"
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - "docs/**"
+      - "img/**"
+      - "**/*.md"
 
 # 取消重复运行
 concurrency:
@@ -17,6 +25,7 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
       - name: Checkout code
@@ -27,14 +36,6 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
       - name: Install dependencies
         run: |
