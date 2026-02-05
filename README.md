@@ -116,22 +116,6 @@ python -m pytest
 python -m pytest --cov=banking --cov-report=term-missing
 ```
 
-## 📊 Performance
-
-The system is optimized for high throughput. Below are the results from our stress tests on a standard machine:
-
-| Transactions | Time (s) | Txn/s      | Peak MB |
-|--------------|----------|------------|---------|
-| 1,000        | 0.0101   | 99,009.08  | 0.28    |
-| 100,000      | 0.7672   | 130,352.21 | 27.44   |
-| 1,000,000    | 7.7345   | 129,290.81 | 272.07  |
-| 10,000,000   | 85.0875  | 117,526.14 | 2,737.18|
-
-Run the stress test yourself:
-```bash
-python -m tests.performance.stress_test
-```
-
 ## 📂 Project Structure
 
 ```
