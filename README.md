@@ -85,9 +85,8 @@ The easiest way to run the application is using Docker Compose.
 docker-compose up --build
 ```
 
-The API will be available at:
-- **API Root**: http://localhost:8000/
-- **Interactive Docs**: http://localhost:8000/docs
+The API Docs will be available at:
+- **Interactive Docs**: https://banking-system-backend-klt3.onrender.com/docs
 
 ### 3. Run Locally (Manual)
 
