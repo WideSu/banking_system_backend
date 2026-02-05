@@ -37,6 +37,21 @@ def test_get_balance_existing():
 def test_get_balance_not_found():
     resp = client.get("/accounts/doesnotexist")
     assert resp.status_code == 404
+
+
+@log_test()
+def test_list_accounts():
+    client.post("/accounts/", json={"name": "alice", "initial_balance": 100.0})
+    client.post("/accounts/", json={"name": "bob", "initial_balance": 50.0})
+
+    resp = client.get("/accounts")
+    assert resp.status_code == 200
+    assert resp.json() == {
+        "accounts": [
+            {"name": "alice", "balance": 100.0},
+            {"name": "bob", "balance": 50.0},
+        ]
+    }
 @log_test()
 def test_deposit_success():
     client.post("/accounts/", json={"name": "dan", "initial_balance": 0.0})

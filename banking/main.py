@@ -30,6 +30,17 @@ async def root():
     return {"message": "Welcome to the Simple Banking API"}
 
 
+@app.get("/accounts")
+@app.get("/accounts/")
+async def list_accounts():
+    return {
+        "accounts": [
+            {"name": name, "balance": account.balance}
+            for name, account in sorted(bank.accounts.items())
+        ]
+    }
+
+
 @app.post("/accounts/")
 async def create_account(data: AccountCreate):
     try:
