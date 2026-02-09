@@ -1,4 +1,4 @@
-# 🏦 In-Memory Banking System
+# In-Memory Banking System
 
 ![Build Status](https://img.shields.io/github/actions/workflow/status/WideSu/banking_system_backend/python-ci.yml?branch=main)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
@@ -7,15 +7,15 @@
 
 A high-performance, in-memory banking system backend built with **Python** and **FastAPI**. Designed for demonstration, it showcases best practices in concurrent programming (Asyncio), RESTful API design, and containerization (Docker).
 
-## ✨ Features
+## Features
 
-- **⚡ High Performance**: Pure in-memory operations with **O(1)** lookup times.
-- **🔒 Concurrency Safe**: Uses Python's `asyncio` single-threaded event loop to handle concurrent requests safely without locks.
-- **🐳 Docker Ready**: Containerized for easy deployment to any cloud platform (Render, AWS, GCP).
-- **🛡️ Robust Error Handling**: Custom exceptions for domain-specific errors (Insufficient Funds, Account Not Found, etc.).
-- **✅ Comprehensive Testing**: 100% test coverage with **PyTest** and **GitHub Actions** CI/CD.
+- ** High Performance**: Pure in-memory operations with **O(1)** lookup times.
+- ** Concurrency Safe**: Uses Python's `asyncio` single-threaded event loop to handle concurrent requests safely without locks.
+- ** Docker Ready**: Containerized for easy deployment to any cloud platform (Render, AWS, GCP).
+- ** Robust Error Handling**: Custom exceptions for domain-specific errors (Insufficient Funds, Account Not Found, etc.).
+- ** Comprehensive Testing**: 100% test coverage with **PyTest** and **GitHub Actions** CI/CD.
 
-## 🏗️ Architecture
+## Architecture
 
 The system follows a clean architecture separating the domain model from the API layer.
 
@@ -52,7 +52,7 @@ graph TD
     class Python_Banking_System,Core_Operations,Error_Handling fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px
 ```
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Language**: Python 3.9+
 - **Framework**: FastAPI
@@ -63,7 +63,7 @@ graph TD
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -104,7 +104,7 @@ pip install -r requirements.txt
 python -m banking.main
 ```
 
-## 🧪 Testing
+## Testing
 
 We maintain **100% code coverage**. You can run the test suite using PyTest.
 
@@ -116,7 +116,7 @@ python -m pytest
 python -m pytest --cov=banking --cov-report=term-missing
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 banking_system_backend/
@@ -134,7 +134,7 @@ banking_system_backend/
 └── requirements.txt      # Project Dependencies
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -144,6 +144,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
